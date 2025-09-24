@@ -35,7 +35,11 @@
             The minimum number of likes per capita:
             <input type="number" [(ngModel)]="formValues['likeCount']">
           </label>
-
+          <br>
+          <label>
+            Number of vehicles:
+            <input type="number" [(ngModel)]="formValues['vehicleCount']">
+          </label>
           @if (showFuelCostWarning) {
             <p class="warning">Please enter a value for fuel cost.</p>
           }

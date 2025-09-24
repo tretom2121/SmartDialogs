@@ -2,31 +2,46 @@
 using SmartDialogs.Core.Dialogs;
 using SmartDialogs.Core.Models;
 
-namespace SmartDialogs.Implementations.VehicleScheduling.Nodes;
-
-public class OtherParametersNode : IDialogNode
+namespace SmartDialogs.Implementations.VehicleScheduling.Nodes
 {
-    public string NodeName => "OtherParameters";
-
-    public DialogState GetNextState(DialogState currentState)
+    public class OtherParametersNode : IDialogNode
     {
-        if (currentState.Parameters.TryGetValue("likeCount", out var likeCountValue))
+        public string NodeName => "OtherParameters";
+
+        public DialogState GetNextState(DialogState currentState)
         {
-            if (likeCountValue is JsonElement jsonElement)
+            var likeCount = 0;
+            if (currentState.Parameters.TryGetValue("likeCount", out var likeCountValue))
             {
-                try
+                if (likeCountValue is JsonElement likeCountElement)
                 {
-                    var likeCount = jsonElement.GetInt32();
-
-                    if (likeCount < 3)
+                    try
                     {
-                        return new DialogState { CurrentState = "CostParameters", Parameters = currentState.Parameters };
+                        likeCount = likeCountElement.GetInt32();
                     }
+                    catch (FormatException) { throw new ArgumentException("'likeCount' is not a valid number."); }
                 }
-                catch (FormatException) { throw new ArgumentException("'likeCount' is not a valid number."); }
             }
-        }
 
-        return new DialogState { CurrentState = "Finished", Parameters = currentState.Parameters };
+            var vehicleCount = 0;
+            if (currentState.Parameters.TryGetValue("vehicleCount", out var vehicleCountValue))
+            {
+                if (vehicleCountValue is JsonElement vehicleCountElement)
+                {
+                    try
+                    {
+                        vehicleCount = vehicleCountElement.GetInt32();
+                    }
+                    catch (FormatException) { throw new ArgumentException("'vehicleCount' is not a valid number."); }
+                }
+            }
+
+            if (likeCount < 3 || vehicleCount > 10)
+            {
+                return new DialogState { CurrentState = "CostParameters", Parameters = currentState.Parameters };
+            }
+
+            return new DialogState { CurrentState = "Finished", Parameters = currentState.Parameters };
+        }
     }
 }
