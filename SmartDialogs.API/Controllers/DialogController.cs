@@ -6,25 +6,19 @@ namespace SmartDialogs.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DialogController : ControllerBase
+    
+    public class DialogController(IDialogService dialogService) : ControllerBase
     {
-        private readonly DialogService DialogService;
-
-        public DialogController()
-        {
-            DialogService = new DialogService();
-        }
-
         [HttpGet("start")]
         public ActionResult<DialogState> Start()
         {
-            return DialogService.GetInitialState();
+            return dialogService.GetInitialState();
         }
 
         [HttpPost("next")]
         public ActionResult<DialogState> Next(DialogState currentState)
         {
-            return DialogService.GetNextState(currentState);
+            return dialogService.GetNextState(currentState);
         }
     }
 }
