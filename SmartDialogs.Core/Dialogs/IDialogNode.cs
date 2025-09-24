@@ -1,6 +1,6 @@
-﻿using SmartDialogs.API.Models;
+﻿using SmartDialogs.Core.Models;
 
-namespace SmartDialogs.API.Dialogs;
+namespace SmartDialogs.Core.Dialogs;
 
 public interface IDialogNode
 {

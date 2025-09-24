@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDialogs.API", "SmartDialogs.API\SmartDialogs.API.csproj", "{197AC78B-594F-4A5F-816A-26FDB03A47A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDialogs.Core", "SmartDialogs.Core\SmartDialogs.Core.csproj", "{0CEB036A-D16C-4234-BBBB-0C307764A84F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{197AC78B-594F-4A5F-816A-26FDB03A47A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{197AC78B-594F-4A5F-816A-26FDB03A47A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{197AC78B-594F-4A5F-816A-26FDB03A47A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CEB036A-D16C-4234-BBBB-0C307764A84F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CEB036A-D16C-4234-BBBB-0C307764A84F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CEB036A-D16C-4234-BBBB-0C307764A84F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CEB036A-D16C-4234-BBBB-0C307764A84F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,7 @@
 ﻿using Autofac;
-using SmartDialogs.API.Dialogs;
 using SmartDialogs.API.Services;
+using SmartDialogs.Core.Dialogs;
+using SmartDialogs.Core.Services;
 
 namespace SmartDialogs.API.Autofac;
 

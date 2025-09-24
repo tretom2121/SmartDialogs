@@ -14,4 +14,12 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Dialogs\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SmartDialogs.Core\SmartDialogs.Core.csproj" />
+    </ItemGroup>
+
 </Project>

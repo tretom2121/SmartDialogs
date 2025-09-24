@@ -1,4 +1,4 @@
-﻿namespace SmartDialogs.API.Models
+﻿namespace SmartDialogs.Core.Models
 {
     public class DialogState
     {

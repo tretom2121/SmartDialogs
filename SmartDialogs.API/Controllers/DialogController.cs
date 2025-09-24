@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SmartDialogs.API.Models;
 using SmartDialogs.API.Services;
+using SmartDialogs.Core.Models;
+using SmartDialogs.Core.Services;
 
 namespace SmartDialogs.API.Controllers
 {

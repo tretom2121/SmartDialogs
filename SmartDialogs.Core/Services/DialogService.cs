@@ -1,7 +1,7 @@
-﻿using SmartDialogs.API.Dialogs;
-using SmartDialogs.API.Models;
+﻿using SmartDialogs.Core.Dialogs;
+using SmartDialogs.Core.Models;
 
-namespace SmartDialogs.API.Services
+namespace SmartDialogs.Core.Services
 {
     public class DialogService : IDialogService
     {
