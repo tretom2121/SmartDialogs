@@ -20,6 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SmartDialogs.Core\SmartDialogs.Core.csproj" />
+      <ProjectReference Include="..\SmartDialogs.Implementations\SmartDialogs.Implementations.csproj" />
     </ItemGroup>
 
 </Project>

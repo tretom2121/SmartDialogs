@@ -1,6 +1,7 @@
-﻿using SmartDialogs.Core.Models;
+﻿using SmartDialogs.Core.Dialogs;
+using SmartDialogs.Core.Models;
 
-namespace SmartDialogs.Core.Dialogs;
+namespace SmartDialogs.Implementations.VehicleScheduling.Nodes;
 
 public class WelcomeNode : IDialogNode
 {

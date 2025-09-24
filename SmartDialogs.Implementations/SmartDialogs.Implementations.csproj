@@ -7,4 +7,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SmartDialogs.Core\SmartDialogs.Core.csproj" />
+    </ItemGroup>
+
 </Project>

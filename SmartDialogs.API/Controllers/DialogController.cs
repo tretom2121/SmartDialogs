@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SmartDialogs.API.Services;
 using SmartDialogs.Core.Models;
 using SmartDialogs.Core.Services;
 
@@ -7,19 +6,18 @@ namespace SmartDialogs.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    
-    public class DialogController(IDialogService dialogService) : ControllerBase
+    public class DialogController(IDialogServiceProvider dialogServiceProvider) : ControllerBase
     {
-        [HttpGet("start")]
-        public ActionResult<DialogState> Start()
+        [HttpGet("start/{key}")]
+        public ActionResult<DialogState> Start(string key)
         {
-            return dialogService.GetInitialState();
+            return dialogServiceProvider.GetDialogService(key).GetInitialState();
         }
 
-        [HttpPost("next")]
-        public ActionResult<DialogState> Next(DialogState currentState)
+        [HttpPost("next/{key}")]
+        public ActionResult<DialogState> Next(string key, [FromBody] DialogState currentState)
         {
-            return dialogService.GetNextState(currentState);
+            return dialogServiceProvider.GetDialogService(key).GetNextState(currentState);
         }
     }
 }
