@@ -1,41 +1,71 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogService } from './dialog.service';
 import { DialogState } from './dialog.models';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, JsonPipe],
   templateUrl: './dialog.component.html',
-  // styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
-  currentState?: DialogState;
-  // This object will hold the user's answers
+  dialogState$!: Observable<DialogState>;
+  currentState: DialogState | null = null;
   formValues: { [key: string]: any } = {};
+  showFuelCostWarning = false; // <-- New property for the warning
+  private dialogKey!: string;
 
-  constructor(private dialogService: DialogService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit(): void {
-    // Start the dialog when the component loads
-    this.dialogService.startDialog().subscribe(state => {
-      this.currentState = state;
-    });
+    this.dialogKey = this.route.snapshot.paramMap.get('key')!;
+    if (this.dialogKey) {
+      this.dialogState$ = this.dialogService.start(this.dialogKey).pipe(
+        tap(state => this.initializeState(state))
+      );
+    }
   }
 
-  // Called when the user clicks the "Next" button
   onNext(): void {
-    if (this.currentState) {
-      // Merge the user's answers into the state's parameters
-      this.currentState.parameters = { ...this.currentState.parameters, ...this.formValues };
+    if (!this.currentState) return;
 
-      this.dialogService.getNextState(this.currentState).subscribe(newState => {
-        this.currentState = newState;
-        // Clear form values for the next step
-        this.formValues = {};
-      });
+    // --- Validation Logic ---
+    if (this.currentState.currentState === 'CostParameters') {
+      if (!this.formValues['fuelCost']) {
+        this.showFuelCostWarning = true;
+        return; // Stop execution if validation fails
+      }
     }
+    // --- End of Validation ---
+
+    const nextState: DialogState = {
+      ...this.currentState,
+      parameters: {
+        ...this.currentState.parameters,
+        ...this.formValues
+      }
+    };
+
+    this.dialogState$ = this.dialogService.next(this.dialogKey, nextState).pipe(
+      tap(state => this.initializeState(state))
+    );
+  }
+
+  selectGoalAndNext(goal: string): void {
+    this.formValues['goal'] = goal;
+    this.onNext();
+  }
+
+  private initializeState(state: DialogState): void {
+    this.currentState = state;
+    this.formValues = {};
+    this.showFuelCostWarning = false; // Reset warning on state change
   }
 }

@@ -1,41 +1,59 @@
-﻿@if (currentState) {
-  <div>
-    <h2>Optimization Setup</h2>
+﻿@if (dialogState$ | async) {
+  @if (currentState) {
+    <div>
+      <h2>Optimization Setup</h2>
 
-    @switch (currentState.currentState) {
+      @switch (currentState.currentState) {
 
-      @case ('Welcome') {
-        <p>Welcome to the vehicle scheduling optimization setup wizard.</p>
+        @case ('Welcome') {
+          <p>Welcome to the vehicle scheduling optimization setup wizard.</p>
+        }
+
+        @case ('SelectGoal') {
+          <p>What is the main goal of this optimization?</p>
+          <div class="button-container">
+            <button (click)="selectGoalAndNext('MinimizeCosts')" class="button">Minimize Costs</button>
+            <button (click)="selectGoalAndNext('MaximizeCoverage')" class="button">Maximize Route Coverage</button>
+          </div>
+        }
+
+        @case ('CostParameters') {
+          <p>Please provide the parameters for cost minimization.</p>
+          <label>
+            Fuel Cost per Liter:
+            <input type="number" [(ngModel)]="formValues['fuelCost']">
+          </label>
+
+          @if (showFuelCostWarning) {
+            <p class="warning">Please enter a value for fuel cost.</p>
+          }
+        }
+
+        @case ('OtherParameters') {
+          <p>Please provide like count for the optimization.</p>
+          <label>
+            The minimum number of likes per capita:
+            <input type="number" [(ngModel)]="formValues['likeCount']">
+          </label>
+
+          @if (showFuelCostWarning) {
+            <p class="warning">Please enter a value for fuel cost.</p>
+          }
+        }
+
+        @case ('Finished') {
+          <p>Setup complete! The optimization can now begin.</p>
+          <pre>{{ currentState.parameters | json }}</pre>
+        }
+
+        @default {
+          <p>Loading state...</p>
+        }
       }
 
-      @case ('SelectGoal') {
-        <p>What is the main goal of this optimization?</p>
-        <select [(ngModel)]="formValues['goal']">
-          <option value="MinimizeCosts">Minimize Costs</option>
-          <option value="MaximizeCoverage">Maximize Route Coverage</option>
-        </select>
+      @if (currentState.currentState !== 'Finished' && currentState.currentState !== 'SelectGoal') {
+        <button (click)="onNext()">Next</button>
       }
-
-      @case ('CostParameters') {
-        <p>Please provide the parameters for cost minimization.</p>
-        <label>
-          Fuel Cost per Liter:
-          <input type="number" [(ngModel)]="formValues['fuelCost']">
-        </label>
-      }
-
-      @case ('Finished') {
-        <p>Setup complete! The optimization can now begin.</p>
-        <pre>{{ currentState.parameters | json }}</pre>
-      }
-
-      @default {
-        <p>Loading...</p>
-      }
-    }
-
-    @if (currentState.currentState !== 'Finished') {
-      <button (click)="onNext()">Next</button>
-    }
-  </div>
+    </div>
+  }
 }

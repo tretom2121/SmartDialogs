@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+.warning {
+  color: #dc3545; /* A standard red color for warnings */
+  font-weight: bold;
+  margin-top: 5px;
+}

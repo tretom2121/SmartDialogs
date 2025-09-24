@@ -4,19 +4,18 @@ import { Observable } from 'rxjs';
 import { DialogState } from './dialog.models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DialogService {
-  // Make sure this points to the HTTPS address from launchSettings.json
-  private apiUrl = 'https://localhost:7278/Dialog';
+  private apiUrl = 'https://localhost:7278/dialog';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  startDialog(): Observable<DialogState> {
-    return this.http.get<DialogState>(`${this.apiUrl}/start`);
+  start(key: string): Observable<DialogState> {
+    return this.http.get<DialogState>(`${this.apiUrl}/start/${key}`);
   }
 
-  getNextState(currentState: DialogState): Observable<DialogState> {
-    return this.http.post<DialogState>(`${this.apiUrl}/next`, currentState);
+  next(key: string, currentState: DialogState): Observable<DialogState> {
+    return this.http.post<DialogState>(`${this.apiUrl}/next/${key}`, currentState);
   }
 }
