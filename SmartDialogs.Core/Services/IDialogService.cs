@@ -6,4 +6,6 @@ public interface IDialogService
 {
     DialogState GetInitialState();
     DialogState GetNextState(DialogState currentState);
+    DialogState PreviewNextState(DialogState currentState);
+
 }

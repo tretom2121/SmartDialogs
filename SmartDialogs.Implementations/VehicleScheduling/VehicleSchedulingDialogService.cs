@@ -15,9 +15,7 @@ namespace SmartDialogs.Implementations.VehicleScheduling
             };
         }
 
-        public DialogState GetNextState(DialogState currentState)
-        {
-            return dialogChain.GetNextState(currentState);
-        }
+        public DialogState GetNextState(DialogState currentState) => dialogChain.GetNextState(currentState);
+        public DialogState PreviewNextState(DialogState currentState) => dialogChain.GetNextState(currentState);
     }
 }

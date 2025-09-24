@@ -24,6 +24,8 @@ export class DialogComponent implements OnInit {
     private dialogService: DialogService
   ) {}
 
+  nextStateName: string | null = null;
+
   ngOnInit(): void {
     this.dialogKey = this.route.snapshot.paramMap.get('key')!;
     if (this.dialogKey) {
@@ -35,7 +37,6 @@ export class DialogComponent implements OnInit {
 
   onNext(): void {
     if (!this.currentState) return;
-
     // --- Validation Logic ---
     if (this.currentState.currentState === 'CostParameters') {
       if (!this.formValues['fuelCost']) {
@@ -44,7 +45,6 @@ export class DialogComponent implements OnInit {
       }
     }
     // --- End of Validation ---
-
     const nextState: DialogState = {
       ...this.currentState,
       parameters: {
@@ -52,10 +52,25 @@ export class DialogComponent implements OnInit {
         ...this.formValues
       }
     };
-
     this.dialogState$ = this.dialogService.next(this.dialogKey, nextState).pipe(
       tap(state => this.initializeState(state))
     );
+  }
+
+  previewNextState(): void {
+    if (!this.currentState) return;
+
+    const previewState: DialogState = {
+      ...this.currentState,
+      parameters: {
+        ...this.currentState.parameters,
+        ...this.formValues
+      }
+    };
+
+    this.dialogService.previewNext(this.dialogKey, previewState).subscribe(state => {
+      this.nextStateName = state.currentState;
+    });
   }
 
   selectGoalAndNext(goal: string): void {
@@ -67,5 +82,6 @@ export class DialogComponent implements OnInit {
     this.currentState = state;
     this.formValues = {};
     this.showFuelCostWarning = false; // Reset warning on state change
+    this.previewNextState();
   }
 }

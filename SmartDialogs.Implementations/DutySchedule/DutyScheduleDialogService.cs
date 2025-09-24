@@ -8,5 +8,6 @@ namespace SmartDialogs.Implementations.DutySchedule
     {
         public DialogState GetInitialState() => new() { CurrentState = "SelectDate" };
         public DialogState GetNextState(DialogState currentState) => dialogChain.GetNextState(currentState);
+        public DialogState PreviewNextState(DialogState currentState) => dialogChain.GetNextState(currentState);
     }
 }

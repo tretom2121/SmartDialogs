@@ -18,4 +18,8 @@ export class DialogService {
   next(key: string, currentState: DialogState): Observable<DialogState> {
     return this.http.post<DialogState>(`${this.apiUrl}/next/${key}`, currentState);
   }
+
+  previewNext(key: string, currentState: DialogState): Observable<DialogState> {
+    return this.http.post<DialogState>(`${this.apiUrl}/preview/${key}`, currentState);
+  }
 }

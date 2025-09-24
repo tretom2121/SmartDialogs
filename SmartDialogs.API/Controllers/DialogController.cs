@@ -19,5 +19,11 @@ namespace SmartDialogs.API.Controllers
         {
             return dialogServiceProvider.GetDialogService(key).GetNextState(currentState);
         }
+        
+        [HttpPost("preview/{key}")]
+        public ActionResult<DialogState> Preview(string key, [FromBody] DialogState currentState)
+        {
+            return dialogServiceProvider.GetDialogService(key).PreviewNextState(currentState);
+        }
     }
 }

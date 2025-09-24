@@ -21,7 +21,7 @@
           <p>Please provide the parameters for cost minimization.</p>
           <label>
             Fuel Cost per Liter:
-            <input type="number" [(ngModel)]="formValues['fuelCost']">
+            <input type="number" [(ngModel)]="formValues['fuelCost']" (ngModelChange)="previewNextState()">
           </label>
 
           @if (showFuelCostWarning) {
@@ -33,12 +33,12 @@
           <p>Please provide like count for the optimization.</p>
           <label>
             The minimum number of likes per capita:
-            <input type="number" [(ngModel)]="formValues['likeCount']">
+            <input type="number" [(ngModel)]="formValues['likeCount']" (ngModelChange)="previewNextState()">
           </label>
           <br>
           <label>
             Number of vehicles:
-            <input type="number" [(ngModel)]="formValues['vehicleCount']">
+            <input type="number" [(ngModel)]="formValues['vehicleCount']" (ngModelChange)="previewNextState()">
           </label>
           @if (showFuelCostWarning) {
             <p class="warning">Please enter a value for fuel cost.</p>
@@ -57,6 +57,10 @@
 
       @if (currentState.currentState !== 'Finished' && currentState.currentState !== 'SelectGoal') {
         <button (click)="onNext()">Next</button>
+      }
+
+      @if (currentState.currentState !== 'Finished' && nextStateName) {
+        <p>Next step: <strong>{{ nextStateName }}</strong></p>
       }
     </div>
   }

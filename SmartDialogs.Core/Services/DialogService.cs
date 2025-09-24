@@ -25,5 +25,10 @@ namespace SmartDialogs.Core.Services
         {
             return DialogChain.GetNextState(currentState);
         }
+
+        public DialogState PreviewNextState(DialogState currentState)
+        {
+            return DialogChain.GetNextState(currentState);
+        }
     }
 }
